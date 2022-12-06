@@ -13,9 +13,9 @@
 #define MAX_PLACENAME               100
 
 void* ifctele_genElement(int index, int age, unsigned int detected_time, int history_place[N_HISTORY]);
-char* ifctele_getPlaceName(int placeIndex);
+int ifctele_getPlaceName(void* placeName, char *str);
 int ifctele_getHistPlaceIndex(void* obj, int index);
 unsigned int ifctele_getinfestedTime(void* obj);
-int ifctele_getAge(void* obj);
+int ifctele_getAge(void* obj, int num_b, int num_s);
 void ifctele_printElement(void* obj);
 #endif /* ifct_element_h */

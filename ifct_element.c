@@ -135,11 +135,21 @@ void* ifctele_genElement(int index, int age, unsigned int detected_time, int his
 	return ptr;
 }
 
-int ifctele_getAge(void* obj)
+
+int ifctele_getAge(void* obj, int num_b, int num_s)
 {
+	int res = 0;
+	 
 	ifs_ele_t* ptr = (ifs_ele_t*)obj;
 	
-	return ptr->age;
+	// 환자의 나이가 num_b ~ num_s 사이인지 검사한 결과를 변수 res에 저장 
+	
+	if ((ptr->age >= num_s) && (ptr->age <= num_b)) 
+		res = 0;
+	else
+		res = 1;
+	
+	return res;        
 }
 
 int ifctele_getHistPlaceIndex(void* obj, int index);
@@ -165,9 +175,14 @@ void ifctele_printElement(void* obj)
 }
 
 
-
-
-char* ifctele_getPlaceName(int placeIndex)
+int ifctele_getPlaceName(void* placeName, char *str)
 {
-	return countryName[placeIndex];
+	int res = 0;
+	
+	ifs_ele_t* ptr = (ifs_ele_t*)placeName;
+	
+	// 문자열 비교 결과를 변수 res에 저장
+	res = strcmp(countryName[ptr->place[0]], str);
+	
+	return res;        
 }
