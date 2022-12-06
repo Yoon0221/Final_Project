@@ -42,19 +42,18 @@ int main(int argc, const char * argv[]) {
         return -1;
     }
     
-    #if 
+    //2. #if 
     //1-2. loading each patient informations
-    while ( 3 == fscanf("3가지 읽기", 변수들))
+    while ( 3 == fscanf(fp, "%d %d %d", &pIndex, &age, &time))
     {
-    	for 
-			fscanf(5개 읽기) ;
+    	fscanf(fp, "%d %d %d %d %d", &placeHist[4], &placeHist[3], &placeHist[2], & placeHist[1], &placeHist[0]) ;
 			
-		ifct_element = ifctele_genElement(index, age, ...);
-		
+		ifct_element = ifctele_genElement(pIndex, age, time, placeHist);
+			 
 		ifctdb_addTail(ifct_element);
 		
 	}
-	#endif
+	//3. #endif
     
     //1-3. FILE pointer close
     fclose(fp);
@@ -89,7 +88,10 @@ int main(int argc, const char * argv[]) {
                 break;
                 
             case MENU_PATIENT:
-                
+                {
+                	//확인
+					ifctele_printElement(ifctdb_getData(1)); 
+				}
                 break;
                 
             case MENU_PLACE:

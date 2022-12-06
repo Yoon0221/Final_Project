@@ -54,6 +54,7 @@ typedef enum place {
     CapeTown        //39
 } place_t;
 
+
 char countryName[N_PLACE+1][MAX_PLACENAME] =
 {   "Seoul",
     "Jeju",
@@ -98,11 +99,12 @@ char countryName[N_PLACE+1][MAX_PLACENAME] =
     "Unrecognized"
 };
 
+
 typedef struct ifs_ele {
-	int index;//number
-	int age;//age
-	int time;//time
-	place_t place[N_HISTORY];//place[N_HISTORY]
+	int index;                       //number
+	int age;                         //age
+	int time;                        //time
+	place_t place[N_HISTORY];        //place[N_HISTORY]
 } ifs_ele_t;
 
 
@@ -111,9 +113,24 @@ void* ifctele_genElement(int index, int age, unsigned int detected_time, int his
 {
 	ifs_ele_t* ptr;
 	
-	ptr = malloc();
+	ptr = (int*)malloc(sizeof(int) * 8);
+	
+	// 동적할당 실패시 
+	if (ptr == NULL)
+	{
+		printf("malloc error");
+		exit(1);
+	}
+	
+	// 구조체 내용 저장 
 	ptr->index = index;
-	//..
+	ptr->age   = age;
+	ptr->time  = detected_time;
+	ptr->place[4] = history_place[4];
+	ptr->place[3] = history_place[3];
+	ptr->place[2] = history_place[2];
+	ptr->place[1] = history_place[1];
+	ptr->place[0] = history_place[0];
 		
 	return ptr;
 }
@@ -136,7 +153,15 @@ void ifctele_printElement(void* obj)
 {
 	ifs_ele_t* ptr = (ifs_ele_t*)obj;
 	
-	printf("Age : %i\n", ptr->age);
+	// 출력 내용
+	printf("환자 번호 : %d\n", ptr->index); 
+	printf("나이 : %d\n", ptr->age);
+	printf("감염 확인일자 : %d\n", ptr->time);
+	printf("확인 4일전 장소 : %s\n", countryName[ptr->place[4]]);
+	printf("확인 3일전 장소 : %s\n", countryName[ptr->place[3]]);
+	printf("확인 2일전 장소 : %s\n", countryName[ptr->place[2]]);
+	printf("확인 하루전 장소 : %s\n", countryName[ptr->place[1]]);
+	printf("확인 당시 장소 : %s\n", countryName[ptr->place[0]]);
 }
 
 
