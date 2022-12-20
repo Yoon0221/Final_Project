@@ -175,7 +175,7 @@ void ifctele_printElement(void* obj)
 	printf("확인 하루전 장소 : %s\n", countryName[ptr->place[1]]);
 	printf("확인 당시 장소 : %s\n", countryName[ptr->place[0]]);
 }
-
+ 
 
 int ifctele_getPlaceName(void* placeName, char *str)
 {
@@ -187,4 +187,13 @@ int ifctele_getPlaceName(void* placeName, char *str)
 	res = strcmp(countryName[ptr->place[0]], str);
 	
 	return res;        
+}
+
+
+int when_start_ifc(void* obj) 
+{
+	ifs_ele_t* ptr = (ifs_ele_t*)obj;
+	
+	// 감염확인 일자 반환 
+	return ptr->time;
 }

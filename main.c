@@ -28,10 +28,11 @@ int main(int argc, const char * argv[]) {
     int placeHist[N_HISTORY];
     
     // 지윤 - 변수 선언
-	int check_num = -1; 
-    char check_place[100] = {0};
+	int check_num = -1;                   // 1번과 4번에서 환자번호를 받아오는 변수   
+    char check_place[100] = {0};          // 2번에서 환자의 위치를 받아오는 변수   
     int i, res, none = 0; 
-    int check_big = 0, check_small = 0;
+    int check_big = 0, check_small = 0;   // 3번에서 환자의 나이대를 받아오는 변수   
+    int start_day = 0;                    
     
     //------------- 1. loading patient info file ------------------------------
     //1-1. FILE pointer open
@@ -184,7 +185,25 @@ int main(int argc, const char * argv[]) {
                 
             case MENU_TRACK:
                 {
+                	while(1)
+                	{
+                		printf("\n\n추적하고 싶은 환자의 번호를 입력해주십시오 : ");
+                		scanf(" %d", &check_num);
+                		getchar();
+                		
+                		// 입력받은 환자 번호가 0보다 크거나 같고 마지막 환자의 번호보다 작거나 같은 경우가 아니면 break
+                		if ((check_num >= 0) && (check_num < ifctdb_len()))
+                			break;
+					}
+                
+                	printf("\n\n");
                 	
+                	// ifctdb_getData 함수를 통해서 check_num 번호에 맞는 포인터를 return받고, 
+                	// when_start_ifc 함수를 통해서 해당 포인터가 가리키는 환자의 감염 확인일자를 start_day에 저장한다. 
+                	start_day = when_start_ifc(ifctdb_getData(check_num));
+                	printf("확인 : %d", start_day);
+                	
+                	printf("\n\n");
 				}
                 break;
                 
