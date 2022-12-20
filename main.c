@@ -51,10 +51,13 @@ int main(int argc, const char * argv[]) {
     //1-2. loading each patient informations
     while ( 3 == fscanf(fp, "%d %d %d", &pIndex, &age, &time))
     {
+    	// 파일의 한 줄 내용을 변수에 저장하기 
     	fscanf(fp, "%d %d %d %d %d", &placeHist[4], &placeHist[3], &placeHist[2], & placeHist[1], &placeHist[0]) ;
 			
+		// ifct_element.c의 함수를 이용해서 파일의 환자 정보를 구조체에 저장하기
 		ifct_element = ifctele_genElement(pIndex, age, time, placeHist);
-			 
+		 
+		// ifct_database.c의 함수를 이용해서 위에서 return받은 포인터 저장하기  
 		ifctdb_addTail(ifct_element);
 		
 	}
@@ -90,12 +93,17 @@ int main(int argc, const char * argv[]) {
                 		scanf(" %d", &check_num);
                 		getchar();
                 		
+                		// 입력받은 환자 번호가 0보다 크거나 같고 마지막 환자의 번호보다 작거나 같은 경우가 아니면 break
                 		if ((check_num >= 0) && (check_num < ifctdb_len()))
                 			break;
 					}
                 
                 	printf("\n\n");
+                	
+                	// ifctdb_getData 함수를 통해서 check_num 번호에 맞는 포인터를 return받고, 
+                	// ifctele_printElement 함수를 통해서 해당 포인터가 가리키는 곳의 정보들을 출력한다. 
                 	ifctele_printElement(ifctdb_getData(check_num));
+                	
                 	printf("\n\n");
 				}
                 break;
@@ -112,6 +120,7 @@ int main(int argc, const char * argv[]) {
 					// 각 환자들의 발병 장소와 입력받은 장소 비교 
 					for (i = 0; i < ifctdb_len(); i++)
 					{
+						// i번째 환자의 발병확인 장소와 check_place의 문자열을 비교한 결과를 res에 저장한다. 
 						res = ifctele_getPlaceName(ifctdb_getData(i), check_place);
 						
 						// 환자의 발병장소와 입력받은 장소가 같으면 
@@ -145,6 +154,7 @@ int main(int argc, const char * argv[]) {
 						printf("최솟값 : ");
 						scanf(" %d", &check_small); 
                 		
+                		// 최댓값과 최솟값은 0보다 커야하고, 최댓값은 최솟값보다 크거나 같아야 한다. 
 						if ((check_big > 0) && (check_small > 0) && (check_big >= check_small))
                 			break;
                 		else
@@ -153,6 +163,7 @@ int main(int argc, const char * argv[]) {
 					
 					for (i = 0; i < ifctdb_len(); i++)
 					{
+						// i번째 환자의 나이와 check_big, check_small 을 비교한 결과를 res에 저장한다. 
 						res = ifctele_getAge(ifctdb_getData(i), check_big, check_small);
 						
 						// 환자의 나이가 입력받은 최대, 최소의 사이이면 
@@ -172,7 +183,9 @@ int main(int argc, const char * argv[]) {
                 break;
                 
             case MENU_TRACK:
-                    
+                {
+                	
+				}
                 break;
                 
             default:

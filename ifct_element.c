@@ -100,6 +100,7 @@ char countryName[N_PLACE+1][MAX_PLACENAME] =
 };
 
 
+// 환자 정볼르 저장하는 구조체  
 typedef struct ifs_ele {
 	int index;                       //number
 	int age;                         //age
@@ -111,8 +112,10 @@ typedef struct ifs_ele {
 
 void* ifctele_genElement(int index, int age, unsigned int detected_time, int history_place[N_HISTORY])
 {
+	// 구조체 포인터 선언하기
 	ifs_ele_t* ptr;
-	
+	 
+	// 구조체 포인터의 크기를 동적할당하기 
 	ptr = (int*)malloc(sizeof(int) * 8);
 	
 	// 동적할당 실패시 
@@ -122,7 +125,7 @@ void* ifctele_genElement(int index, int age, unsigned int detected_time, int his
 		exit(1);
 	}
 	
-	// 구조체 내용 저장 
+	// 구조체에 환자 정보 저장하기 
 	ptr->index = index;
 	ptr->age   = age;
 	ptr->time  = detected_time;
@@ -143,7 +146,6 @@ int ifctele_getAge(void* obj, int num_b, int num_s)
 	ifs_ele_t* ptr = (ifs_ele_t*)obj;
 	
 	// 환자의 나이가 num_b ~ num_s 사이인지 검사한 결과를 변수 res에 저장 
-	
 	if ((ptr->age >= num_s) && (ptr->age <= num_b)) 
 		res = 0;
 	else
@@ -163,7 +165,7 @@ void ifctele_printElement(void* obj)
 {
 	ifs_ele_t* ptr = (ifs_ele_t*)obj;
 	
-	// 출력 내용
+	// 포인터를 이용해서 구조체의 특정 정보들을 출력한다. 
 	printf("환자 번호 : %d\n", ptr->index); 
 	printf("나이 : %d\n", ptr->age);
 	printf("감염 확인일자 : %d\n", ptr->time);
