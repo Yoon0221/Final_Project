@@ -190,10 +190,77 @@ int ifctele_getPlaceName(void* placeName, char *str)
 }
 
 
-int when_start_ifc(void* obj) 
+
+int check_day_and_place(void* obj, int n)
 {
+	int i;
+	int next_sick = -1;
+	
 	ifs_ele_t* ptr = (ifs_ele_t*)obj;
 	
-	// 감염확인 일자 반환 
-	return ptr->time;
+	
+	for (i = 0; i < ifctdb_len(); i++)
+		{
+			void* obj2 = ifctdb_getData(i);
+			ifs_ele_t* ptr2 = (ifs_ele_t*)obj2;
+			
+			// 추적환자의 감염 확인 n일전의 날짜와 다른 환자의 감염확인 당일 혹은 그 전날의 날짜가 겹치는 경우 
+			if (((ptr->time - n) == (ptr2->time)) || ((ptr->time - n) == (ptr2->time-1)))
+			{
+				// 겹치는 날짜에, 장소까지 같은 경우 
+				if ((ptr->place[n] == ptr2->place[0]) || (ptr->place[n] == ptr2->place[1]))
+				{
+					printf("\n\n-> %d번 환자 (시점 %d, %s)", ptr2->index, ptr->time - n, countryName[ptr->place[n]]);
+					next_sick = ptr2->index;
+				}
+			}	
+		} 
+		
+	return next_sick;
+ } 
+
+
+int find_the_first(void* obj)
+{	
+	int check1 = -1, check2 = -1, check3 = -1;
+	int end = -1;
+	
+	ifs_ele_t* ptr = (ifs_ele_t*)obj;
+	
+	
+	// 1. 확인 4일전 장소 비교
+	check1 = check_day_and_place(ptr, 4);
+				
+	if (check1 != -1)
+	{
+		return end = check1;
+	}
+	// 2. 확인 3일전 장소 비교
+	else 
+	{
+		check2 = check_day_and_place(ptr, 3);
+	}
+	
+	if (check2 != -1)
+	{
+		return end = check2;
+	}
+	// 3. 확인 2일전 장소 비교
+	else 
+	{
+		check3 = check_day_and_place(ptr, 2);
+	}
+		
+	if (check3 != -1)
+	{
+		return end = check3;
+	}
+	// 4. 최초전파자 확인 
+	else
+	{
+		printf(" : 최초전파자입니다.\n\n");
+	}
+	
+	
+	return end;
 }

@@ -18,5 +18,7 @@ int ifctele_getHistPlaceIndex(void* obj, int index);
 unsigned int ifctele_getinfestedTime(void* obj);
 int ifctele_getAge(void* obj, int num_b, int num_s);
 void ifctele_printElement(void* obj);
-int when_start_ifc(void* obj); 
+int find_the_first(void* obj);
+int check_day_and_place(void* obj, int n);
+
 #endif /* ifct_element_h */

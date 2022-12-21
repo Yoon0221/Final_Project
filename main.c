@@ -31,8 +31,9 @@ int main(int argc, const char * argv[]) {
 	int check_num = -1;                   // 1번과 4번에서 환자번호를 받아오는 변수   
     char check_place[100] = {0};          // 2번에서 환자의 위치를 받아오는 변수   
     int i, res, none = 0; 
-    int check_big = 0, check_small = 0;   // 3번에서 환자의 나이대를 받아오는 변수   
-    int start_day = 0;                    
+    int check_big = 0, check_small = 0;   // 3번에서 환자의 나이대를 받아오는 변수  
+	int check_end = 0;                    // 4번에서 최초전파자를 확인하는 변수 
+                     
     
     //------------- 1. loading patient info file ------------------------------
     //1-1. FILE pointer open
@@ -196,12 +197,23 @@ int main(int argc, const char * argv[]) {
                 			break;
 					}
                 
-                	printf("\n\n");
+                	printf("\n\n%d번", check_num);
                 	
-                	// ifctdb_getData 함수를 통해서 check_num 번호에 맞는 포인터를 return받고, 
-                	// when_start_ifc 함수를 통해서 해당 포인터가 가리키는 환자의 감염 확인일자를 start_day에 저장한다. 
-                	start_day = when_start_ifc(ifctdb_getData(check_num));
-                	printf("확인 : %d", start_day);
+                	check_end = 0;
+                	check_end = find_the_first(ifctdb_getData(check_num));
+                	
+                	if (check_end != -1)
+                	{
+                		while(1)
+                		{
+                			check_end = find_the_first(ifctdb_getData(check_end));
+                		
+                			if (check_end == -1)
+                			{
+                				break;
+							}
+						}	
+					}
                 	
                 	printf("\n\n");
 				}
