@@ -192,7 +192,7 @@ int main(int argc, const char * argv[]) {
                 		scanf(" %d", &check_num);
                 		getchar();
                 		
-                		// 입력받은 환자 번호가 0보다 크거나 같고 마지막 환자의 번호보다 작거나 같은 경우가 아니면 break
+                		// 입력받은 환자번호가 0보다 크거나 같고 마지막 환자의 번호보다 작거나 같은 경우가 아니면 break
                 		if ((check_num >= 0) && (check_num < ifctdb_len()))
                 			break;
 					}
